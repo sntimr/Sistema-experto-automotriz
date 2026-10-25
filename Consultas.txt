@@ -179,4 +179,4 @@ validar_consulta([funcion_rara(1, 2), otra_estructura(a, b)], Estado, Mensaje).
 validar_consulta(humo_blanco_espeso, Estado, Mensaje).
 
 % 6.8 Ejecutar la batería oficial de los 10 casos de prueba
-ejecutar_pruebas.
+ejecutar_pruebas. 

@@ -62,3 +62,4 @@ Para evitar el error `source_sink does not exist` en Windows:
 2. En la barra superior haz clic en **`File` -> `Consult...`**.
 3. Busca en tu carpeta de **Descargas (`Downloads`)** el archivo `diagnostico_automotriz_sin_comentarios.pl` (o `diagnostico_automotriz_comentado.pl`) y ábrelo.
 4. En la consola escribe `ejecutar_pruebas.` (con el punto final) y presiona **Enter** para ver correr los 10 casos de prueba automáticamente.
+ 
