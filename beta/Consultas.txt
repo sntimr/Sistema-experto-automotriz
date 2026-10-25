@@ -1,0 +1,182 @@
+================================================================================
+BANCO DE CONSULTAS PROLOG - AUTOCHECK-PROLOG (ESCOM - IPN)
+Ordenadas de Nivel 1 (Básicas) a Nivel 6 (Estrés y Casos donde puede tronar)
+Nota: Copia y pega cada línea directamente en la consola de SWI-Prolog.
+================================================================================
+
+% ==============================================================================
+% NIVEL 1: CONSULTAS SENCILLAS (HECHOS Y CATÁLOGO DE OPCIONES WEB)
+% ==============================================================================
+
+% 1.1 Consultar todos los sistemas mecánicos del vehículo
+sistema_auto(IdSistema, Nombre, Descripcion).
+
+% 1.2 Consultar las 10 categorías para armar los bloques de checkboxes en la web
+categoria_opcion(IdCategoria, GrupoPrincipal, TituloUI, InstruccionUI).
+
+% 1.3 Consultar todas las sensaciones dinámicas al conducir (18 hechos)
+sensacion_manejo(IdOpcion, Categoria, EtiquetaWeb).
+
+% 1.4 Consultar todas las observaciones físicas sin escáner (25 hechos)
+observacion_fisica(IdOpcion, Categoria, EtiquetaWeb).
+
+% 1.5 Consultar únicamente las opciones que aparecen al pisar el freno
+opcion_seleccionable(IdOpcion, Grupo, al_frenar, TituloCategoria, EtiquetaWeb).
+
+% 1.6 Consultar únicamente los testigos del tablero disponibles
+opcion_seleccionable(IdOpcion, Grupo, testigos_tablero, TituloCategoria, EtiquetaWeb).
+
+% 1.7 Contar cuántas opciones seleccionables existen en total en el sistema (debe dar 43)
+findall(Id, opcion_seleccionable(Id, _, _, _, _), Lista), length(Lista, TotalOpciones).
+
+% 1.8 Consultar el catálogo completo de las 15 fallas y su gravedad base
+catalogo_falla(IdFalla, Sistema, TituloFalla, GravedadBase, PasosSolucion).
+
+
+% ==============================================================================
+% NIVEL 2: CONSULTAS DE RECURSIVIDAD Y MANEJO DE LISTAS
+% ==============================================================================
+
+% 2.1 Probar pertenencia recursiva (caso exitoso)
+pertenece(pedal_freno_esponjoso, [humo_azul, pedal_freno_esponjoso, testigo_bateria]).
+
+% 2.2 Probar generación de elementos por backtracking usando pertenece/2
+pertenece(ElementoExtraido, [jaloneo_al_acelerar, humo_negro, olor_gasolina_cruda]).
+
+% 2.3 Eliminar opciones duplicadas recursivamente
+agregar_sin_duplicados([humo_azul, humo_azul, nivel_aceite_bajo, humo_azul], ListaLimpia).
+
+% 2.4 Calcular longitud de una lista de opciones recursivamente
+longitud_lista([testigo_bateria, luces_tablero_tenues, tarda_dar_marcha, rpm_inestables], Cantidad).
+
+% 2.5 Filtrar opciones dejando solo las válidas del catálogo y quitando basura
+filtrar_opciones_validas([humo_blanco_espeso, llanta_ponchada, anticongelante_lechoso, espejo_roto], Validada).
+
+% 2.6 Normalizar selección (filtra opciones inexistentes y quita repetidas en un paso)
+normalizar_opciones_seleccionadas([humo_negro, humo_negro, falla_inventada, olor_gasolina_cruda], OpcionesFinales).
+
+
+% ==============================================================================
+% NIVEL 3: CONSULTAS INTERMEDIAS (DIAGNÓSTICO EXACTO DE LAS 15 REGLAS)
+% ==============================================================================
+
+% 3.1 Falla 1: Empaque de culata dañado (riesgo crítico)
+diagnosticar_vehiculo([humo_blanco_espeso, anticongelante_lechoso, testigo_temperatura_alta], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.2 Falla 2: Termostato o bomba de agua (aplica negación por fallo \+ para descartar culata)
+diagnosticar_vehiculo([testigo_temperatura_alta, anticongelante_bajo, olor_dulce_vapor], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.3 Falla 3: Quema de aceite por anillos o sellos de válvulas
+diagnosticar_vehiculo([humo_azul, nivel_aceite_bajo, olor_aceite_quemado], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.4 Falla 4: Baja presión crítica de lubricación (bomba de aceite)
+diagnosticar_vehiculo([testigo_presion_aceite, cascabeleo_metalico_motor], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.5 Falla 5: Mezcla rica de combustible (inyectores abiertos o sensor MAF/O2)
+diagnosticar_vehiculo([humo_negro, olor_gasolina_cruda, jaloneo_al_acelerar], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.6 Falla 6: Falla de encendido en cilindro (bujías o bobinas)
+diagnosticar_vehiculo([motor_tiembla_ralenti, jaloneo_al_acelerar, testigo_check_engine], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.7 Falla 7: Bomba de gasolina débil o filtro tapado (aplica negación \+ de humo negro)
+diagnosticar_vehiculo([perdida_potencia_subida, respuesta_lenta_acelerador], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.8 Falla 8: Falla del alternador o banda de carga
+diagnosticar_vehiculo([testigo_bateria, luces_tablero_tenues, rpm_inestables], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.9 Falla 9: Batería agotada o bornes sulfatados
+diagnosticar_vehiculo([no_da_marcha_click, bornes_bateria_sulfatados], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.10 Falla 10: Fuga hidráulica o aire en líneas de frenos
+diagnosticar_vehiculo([pedal_freno_esponjoso, liquido_frenos_bajo, testigo_frenos_abs], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.11 Falla 11: Discos de freno alabeados y balatas desgastadas
+diagnosticar_vehiculo([vibracion_volante_frenar, chillido_metalico_frenar], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.12 Falla 12: Desgaste en suspensión (amortiguadores, rótulas o bujes)
+diagnosticar_vehiculo([golpeteo_seco_baches, rebote_excesivo_suspension], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.13 Falla 13: Desbalanceo y desalineación de ruedas
+diagnosticar_vehiculo([vibracion_constante_velocidad, auto_desvia_linea_recta, desgaste_irregular_llantas], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.14 Falla 14: Desgaste de embrague (clutch patinando)
+diagnosticar_vehiculo([motor_revoluciona_no_avanza, olor_pasta_quemada], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 3.15 Falla 15: Fuga o baja presión en dirección hidráulica
+diagnosticar_vehiculo([volante_duro_pesado, liquido_direccion_bajo], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+
+% ==============================================================================
+% NIVEL 4: CONSULTAS AVANZADAS (BACKTRACKING Y EVIDENCIA PONDERADA)
+% ==============================================================================
+
+% 4.1 Backtracking clásico: síntomas compartidos entre bomba de gasolina y encendido (presiona ; para ver ambas)
+diagnosticar_vehiculo([jaloneo_al_acelerar, perdida_potencia_subida, tarda_dar_marcha], IdFalla, Sistema, Titulo, Riesgo, _, _, Metodo, Explicacion, _).
+
+% 4.2 Inferencia ponderada pura (sin activar regla exacta): humo blanco + motor tiembla en ralentí (35 + 10 = 45 pts -> no llega a 50, debe dar false)
+diagnosticar_vehiculo([humo_blanco_espeso, motor_tiembla_ralenti], IdFalla, Sistema, Titulo, Riesgo, _, _, Metodo, Explicacion, _).
+
+% 4.3 Inferencia ponderada con síntoma primario + secundario que sí supera los 50 pts (humo blanco 35 + olor dulce vapor 15 = 50 pts)
+diagnosticar_vehiculo([humo_blanco_espeso, olor_dulce_vapor], IdFalla, Sistema, Titulo, Riesgo, _, _, Metodo, Explicacion, _).
+
+% 4.4 Backtracking con un solo síntoma primario de alto peso (devuelve la causa probable por vía ponderada)
+diagnosticar_vehiculo([pedal_freno_esponjoso], IdFalla, Sistema, Titulo, Riesgo, _, _, Metodo, Explicacion, PorVerificar).
+
+% 4.5 Escalamiento dinámico de seguridad vial: una falla moderada (bujías) combinada con un testigo crítico (aceite) sube a peligro_inmediato_detenerse
+diagnosticar_vehiculo([motor_tiembla_ralenti, jaloneo_al_acelerar, testigo_check_engine, testigo_presion_aceite], IdFalla, _, _, RiesgoEscalado, Alerta, _, Metodo, _, _).
+
+
+% ==============================================================================
+% NIVEL 5: VALIDACIÓN Y CASOS DE FRONTERA (EDGE CASES CONTROLADOS)
+% ==============================================================================
+
+% 5.1 Formulario enviado en blanco (lista vacía)
+validar_consulta([], Estado, Mensaje).
+
+% 5.2 Selección de una sola casilla (alerta de datos_insuficientes)
+validar_consulta([testigo_temperatura_alta], Estado, Mensaje).
+
+% 5.3 Trampa de duplicados: el usuario envía 4 elementos pero todos son el mismo síntoma repetido (el sistema lo reduce a 1 y detecta datos_insuficientes)
+validar_consulta([humo_azul, humo_azul, humo_azul, humo_azul], Estado, Mensaje).
+
+% 5.4 Opciones fuera del catálogo mezcladas con opciones válidas
+validar_consulta([humo_negro, estereo_apagado, vidro_estrellado], Estado, Mensaje).
+
+% 5.5 Dos síntomas secundarios aislados sin síntoma primario (no debe dar falsos positivos; devuelve false limpiamente)
+diagnosticar_vehiculo([tarda_dar_marcha, rpm_inestables], IdFalla, _, Titulo, _, _, _, _, _, _).
+
+
+% ==============================================================================
+% NIVEL 6: PRUEBAS DE ESTRÉS Y CASOS DONDE EL PROGRAMA PUEDE TRONAR
+% ==============================================================================
+
+% 6.1 CONTRADICCIÓN LÓGICA (Humo blanco de culata + Temperatura alta de termostato)
+% Qué pasa: No truena, pero la Regla 2 (termostato) se bloquea automáticamente gracias a \+ pertenece(humo_blanco_espeso) y sobrevive solo Empaque de Culata.
+findall(IdFalla-Metodo, diagnosticar_vehiculo([testigo_temperatura_alta, anticongelante_bajo, humo_blanco_espeso], IdFalla, _, _, _, _, _, Metodo, _, _), Resultados).
+
+% 6.2 CONTRADICCIÓN LÓGICA 2 (Falta de potencia en subida + Humo negro)
+% Qué pasa: Bloquea la Regla 7 (bomba de gasolina) por el \+ pertenece(humo_negro), dispara Regla 5 (mezcla rica) por regla exacta, pero por Vía 2 (evidencia ponderada) aún alcanza 60 pts para bomba de gasolina.
+findall(IdFalla-Metodo, diagnosticar_vehiculo([perdida_potencia_subida, jaloneo_al_acelerar, humo_negro], IdFalla, _, _, _, _, _, Metodo, _, _), Resultados).
+
+% 6.3 SOBRECARGA EXTREMA: El usuario marca LAS 43 CASILLAS DEL FORMULARIO AL MISMO TIEMPO
+% Qué pasa: Evalúa todas las reglas y pesos simultáneamente. Las reglas con negación (\+) como la Regla 2 y Regla 7 se desactivan en Vía 1 pero entran por Vía 2 (ponderada), devolviendo las 15 fallas sin duplicar ninguna.
+findall(Id, sintoma_reconocido(Id, _, _, _), TodasLas43), findall(Falla-Metodo, diagnosticar_vehiculo(TodasLas43, Falla, _, _, _, _, _, Metodo, _, _), DiagnosticosMasivos), length(DiagnosticosMasivos, TotalFallas).
+
+% 6.4 CASO DONDE TRUENA #1: Pasar una VARIABLE LIBRE (sin instanciar) como entrada al diagnóstico
+% POR QUÉ TRUENA: filtrar_opciones_validas/2 intenta unificar la variable libre con una lista infinita de elementos válidos y provoca "Stack limit exceeded" (desbordamiento de pila por recursión infinita).
+diagnosticar_vehiculo(VariableSinInstanciar, IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 6.5 CASO DONDE TRUENA #2: Pasar una lista con cola abierta (lista parcial [humo_azul | ColaLibre])
+% POR QUÉ TRUENA: Al no estar cerrada la cola con [], la recursión en filtrar_opciones_validas/2 nunca llega al caso base [] y desborda la memoria de SWI-Prolog.
+diagnosticar_vehiculo([humo_azul | ColaAbierta], IdFalla, Sistema, Titulo, Riesgo, Alerta, Pasos, Metodo, Explicacion, PorVerificar).
+
+% 6.6 CASO DONDE TRUENA #3: Meter términos compuestos (estructuras f(x)) como opciones inválidas en validar_consulta/3
+% POR QUÉ TRUENA: detectar_sintomas_invalidos/2 atrapa funcion_rara(1,2), pero cuando validar_consulta/3 llama a atomic_list_concat/3 para armar el mensaje de texto, SWI-Prolog lanza excepción "ERROR: Type error: `text' expected, found `funcion_rara(1,2)'".
+validar_consulta([funcion_rara(1, 2), otra_estructura(a, b)], Estado, Mensaje).
+
+% 6.7 CASO DONDE FALLA EN SECO #4: Pasar un número o átomo suelto en vez de una lista [...]
+% Qué pasa: No es una lista de Prolog, así que no unifica ni con [] ni con [H|T] y responde false en vez de dar mensaje de validación.
+validar_consulta(humo_blanco_espeso, Estado, Mensaje).
+
+% 6.8 Ejecutar la batería oficial de los 10 casos de prueba
+ejecutar_pruebas.
