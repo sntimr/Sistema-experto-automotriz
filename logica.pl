@@ -283,8 +283,8 @@ diagnosticar_por_evidencia(SintomasUsuario, IdFalla, Puntaje, Coincidentes, Falt
 
 formatear_posibles_causas([], []).
 
-formatear_posibles_causas([Puntaje-info(IdFalla, DetalleFalla, _) | Resto], [TextoCausa | TextosResto]) :-
-    format(atom(TextoCausa), '~w (~w) - Ponderación acumulada: ~w%', [DetalleFalla, IdFalla, Puntaje]),
+formatear_posibles_causas([Puntaje-info(_, DetalleFalla, _) | Resto], [TextoCausa | TextosResto]) :-
+    format(atom(TextoCausa), '~w - Porcentaje: ~w%', [DetalleFalla, Puntaje]),
     formatear_posibles_causas(Resto, TextosResto).
 
 calcular_causas_probables(SintomasUsuario, IdFallaMasProbable, DetalleMasProbable, IdSistemaMasProbable, PuntajeMax, ListaPosiblesCausas) :-

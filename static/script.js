@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const listaSeleccionados = document.getElementById('lista-seleccionados');
     const contadorSeleccionados = document.getElementById('contador-seleccionados');
     const formDiagnostico = document.getElementById('form-diagnostico');
-    
     const seccionResultadosContainer = document.getElementById('resultados');
     const listaResultados = document.getElementById('lista-resultados');
     const mensajeExcepcion = document.getElementById('mensaje-excepcion');
@@ -30,12 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const isExpanded = index === 0 ? 'true' : 'false';
 
                     let checkboxesHTML = '';
-                    sistema.elementos.forEach(el => {
-                        mapaDetalles[el.id] = el.detalle;
-
+                    sistema.elementos.forEach(el => { mapaDetalles[el.id] = el.detalle;
                         checkboxesHTML += `
                             <div class="col-12 col-md-6 mb-2">
-                                <div class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center shadow-sm">
+                                <div class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center">
                                     <input class="form-check-input mt-0 me-2 checkbox-sintoma" type="checkbox" value="${el.id}" id="s_${el.id}" name="sintomas">
                                     <label class="form-check-label text-dark" for="s_${el.id}" style="cursor: pointer; font-size: 0.9rem;">
                                         ${el.detalle}
@@ -46,11 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
 
                     const accordionItem = document.createElement('div');
-                    accordionItem.className = 'accordion-item mb-2 border rounded shadow-sm';
+                    accordionItem.className = 'accordion-item mb-2 border rounded';
                     accordionItem.innerHTML = `
                         <h2 class="accordion-header" id="${headingId}">
-                            <button class="accordion-button ${index !== 0 ? 'collapsed' : ''} fw-semibold bg-light text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="${isExpanded}" aria-controls="${collapseId}">
-                                ⚙️ ${sistema.nombre}
+                            <button class="accordion-button ${index !== 0 ? 'collapsed' : ''} fw-semibold collapsed shadow-none text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="${isExpanded}" aria-controls="${collapseId}">
+                                ${sistema.nombre}
                             </button>
                         </h2>
                         <div id="${collapseId}" class="accordion-collapse collapse ${isFirst}" aria-labelledby="${headingId}" data-bs-parent="#contenedor-sintomas">
@@ -63,10 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     contenedorSintomas.appendChild(accordionItem);
                 });
-
                 activarEventosSeleccion();
             } else {
-                contenedorSintomas.innerHTML = '<div class="alert alert-warning text-center">No se encontraron sistemas o síntomas en la base de conocimiento.</div>';
+                contenedorSintomas.innerHTML = '<div class="alert alert-warning text-center">No se encontraron síntomas en la base de conocimiento.</div>';
             }
         } catch (error) {
             console.error('Error al conectar con la API:', error);
@@ -98,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             li.className = 'text-dark small mb-1';
             li.innerHTML = `${detalleText}`;
-            listaSeleccionados.appendChild(li);
+            listaSeleccionados.append(li);
         });
     }
 
@@ -150,15 +146,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         diagnosticos.forEach((diag, index) => {
             const cardDiv = document.createElement('div');
-            cardDiv.className = 'card border-primary mb-3 shadow-sm';
+            cardDiv.className = 'card';
+
+            let contenidoFallaHTML = '';
+            if (diag.causas_probables && diag.causas_probables.length > 0) {
+                contenidoFallaHTML = `
+                    <div class="mb-3">
+                        <strong class="text-dark d-block mb-1">Causas Probables Evaluadas:</strong>
+                        <ul class="list-group">
+                            ${diag.causas_probables.map(c => `<li class="list-group-item bg-light small py-2 ">${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            } else {contenidoFallaHTML = `<h5 class="card-title text-primary fw-bold mb-3">${diag.falla}</h5>`;}
 
             let recomendacionesHTML = '';
             if (diag.recomendaciones && diag.recomendaciones.length > 0) {
                 recomendacionesHTML = `
                     <div class="mt-3">
-                        <strong class="text-secondary d-block mb-1">Recomendaciones y Pasos a Seguir:</strong>
-                        <ul class="list-group list-group-flush">
-                            ${diag.recomendaciones.map(r => `<li class="list-group-item bg-light small py-2">🛠️ ${r}</li>`).join('')}
+                        <strong class="card-text text-muted mb-2">Recomendaciones a seguir:</strong>
+                        <ul class="list-group">
+                            ${diag.recomendaciones.map(r => `<li class="list-group-item bg-light small py-2"> ${r}</li>`).join('')}
                         </ul>
                     </div>
                 `;
@@ -166,11 +174,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             cardDiv.innerHTML = `
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <span class="fw-bold">Diagnóstico #${index + 1}: ${diag.falla || diag.diagnostico || 'Causa Probable'}</span>
+                    <span class="fw-bold">Diagnóstico</span>
                     <span class="badge bg-light text-primary">${diag.sistema || 'Sistema Automotriz'}</span>
                 </div>
                 <div class="card-body">
-                    <p class="card-text text-danger mb-2"><strong>Riesgo:</strong> ${diag.riesgo || 'No especificado'}</p>
+                    ${contenidoFallaHTML}
+                    <p class="card-text text-danger mb-2"> ${diag.riesgo || 'No especificado'}</p>
                     <p class="card-text text-muted mb-2"><strong>Explicación:</strong> ${diag.explicacion || 'Sin detalles'}</p>
                     ${recomendacionesHTML}
                 </div>
@@ -191,6 +200,5 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Iniciar carga de datos al abrir la página
     cargarSintomas();
 });

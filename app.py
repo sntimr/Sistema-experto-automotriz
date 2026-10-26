@@ -66,17 +66,19 @@ def diagnosticar():
             return jsonify({"exito": False, "error": "No se seleccionaron síntomas."}), 400
             
         lista_prolog = "[" + ", ".join(f"'{s}'" for s in sintomas_seleccionados) + "]"
-        
         query_str = f"diagnosticar_vehiculo({lista_prolog}, DiagnosticoFalla, NombreSistema, Riesgo, Explicacion, Recomendacion)"
+        
         resultados_prolog = list(prolog.query(query_str))
 
         diagnosticos = []
         for res in resultados_prolog:
-
             falla = res.get('DiagnosticoFalla')
+            
             if isinstance(falla, list):
-                falla_str = " | ".join(str(item) for item in falla)
+                lista_causas = [str(item) for item in falla]
+                falla_str = None
             else:
+                lista_causas = None
                 falla_str = str(falla or 'Falla detectada')
 
             recomendaciones = res.get('Recomendacion', [])
@@ -89,6 +91,7 @@ def diagnosticar():
 
             diagnosticos.append({
                 "falla": falla_str,
+                "causas_probables": lista_causas, 
                 "sistema": str(res.get('NombreSistema', 'Sistema Automotriz')),
                 "riesgo": str(res.get('Riesgo', 'Por determinar')),
                 "explicacion": str(res.get('Explicacion', 'Sin explicación detallada.')),
@@ -100,6 +103,7 @@ def diagnosticar():
                 "exito": True,
                 "diagnosticos": [{
                     "falla": "Sin diagnóstico concluyente",
+                    "causas_probables": None,
                     "sistema": "General",
                     "riesgo": "Desconocido",
                     "explicacion": "Los síntomas seleccionados no generaron ninguna coincidencia en la base de conocimiento.",
@@ -111,7 +115,6 @@ def diagnosticar():
 
     except Exception as e:
         return jsonify({"exito": False, "error": str(e)}), 500
-
 
 
 if __name__ == '__main__':
