@@ -11,19 +11,19 @@ sistema_carro(direccion_suspension, 'Sistema de Dirección, Suspensión y Rodami
 sistema_carro(transmision_embrague, 'Sistema de Transmisión y Embrague Clutch', 'Transfiere el par del motor hacia las ruedas a través de la caja de velocidades.').
 
 % observacion(nombre_sintoma, categoria, detalle).
-observacion(humo_blanco, humo_escape, 'Sale humo blanco denso y continuo por el escape incluso con el motor ya caliente').
+observacion(humo_blanco, humo_escape, 'Sale humo blanco denso y continuo por el escape incluso con el motor caliente').
 observacion(humo_azul, humo_escape, 'Sale humo con tono azulado o gris-azulado por el tubo de escape al arrancar o acelerar').
 observacion(humo_negro, humo_escape, 'Sale humo negro oscuro tipo hollín por el escape al acelerar').
-observacion(motor_tiembla, comportamiento_motor, 'El motor tiembla o sacude fuertemente la cabina cuando está detenido en neutral/parking').
+observacion(motor_tiembla, comportamiento_motor, 'El motor tiembla o sacude fuertemente la cabina cuando está detenido en neutral').
 observacion(rpm_inestables, comportamiento_motor, 'La aguja de revoluciones sube y baja sola en ralentí o el motor amenaza con apagarse').
 observacion(marcha_lenta, comportamiento_motor, 'Al girar la llave el motor da marcha lento o requiere varios intentos para encender').
-observacion(no_da_marcha, comportamiento_motor, 'Al girar la llave solo se escucha un chasquido o click y el motor no gira').
+observacion(no_da_marcha, comportamiento_motor, 'Al girar la llave solo se escucha un chasquido click y el motor no gira').
 observacion(cascabeleo_metalico, comportamiento_motor, 'Se escucha un golpeteo o traqueteo metálico constante dentro del motor').
-observacion(check_engine, testigos_tablero, 'Testigo Check Engine (motor amarillo) encendido o parpadeando en el tablero').
-observacion(temperatura_alta, testigos_tablero, 'Testigo rojo de temperatura encendido o aguja en la zona roja (sobrecalentamiento)').
-observacion(presion_aceite, testigos_tablero, 'Testigo rojo de la aceitera (baja presión de aceite) encendido en el tablero').
+observacion(check_engine, testigos_tablero, 'Testigo Check Engine encendido o parpadeando en el tablero').
+observacion(temperatura_alta, testigos_tablero, 'Testigo rojo de temperatura encendido o aguja en la zona roja').
+observacion(presion_aceite, testigos_tablero, 'Testigo rojo de la aceitera encendido en el tablero').
 observacion(testigo_bateria, testigos_tablero, 'Testigo rojo con ícono de batería encendido mientras el motor está en marcha').
-observacion(frenos_abs, testigos_tablero, 'Testigo rojo de sistema de frenos (!) o ABS encendido en el tablero').
+observacion(frenos_abs, testigos_tablero, 'Testigo rojo de sistema de frenos o ABS encendido en el tablero').
 observacion(luces_tenues, testigos_tablero, 'Las luces del tablero y los faros se ven débiles o parpadean al encender accesorios').
 observacion(anticongelante_bajo, niveles_liquidos, 'El nivel del depósito de anticongelante/refrigerante disminuye constantemente').
 observacion(anticongelante_lechoso, niveles_liquidos, 'El anticongelante o la bayoneta de aceite presentan una espuma café/blanca de aspecto lechoso').
@@ -34,23 +34,23 @@ observacion(olor_gasolina_cruda, olores_fugas, 'Se percibe olor fuerte a gasolin
 observacion(olor_dulce_vapor, olores_fugas, 'Huele a jarabe dulce caliente o sale vapor del cofre').
 observacion(olor_pasta_quemada, olores_fugas, 'Huele a pasta o embrague quemado después de subir pendientes o hacer cambios').
 observacion(olor_aceite_quemado, olores_fugas, 'Huele a aceite caliente quemado proveniente del motor o escape').
-observacion(desgaste_llantas, olores_fugas, 'Las llantas delanteras muestran desgaste liso de un solo borde (interno o externo)').
-observacion(bornes_bateria_sulfatados, olores_fugas, 'Las terminales de la batería tienen polvo blanco/verdoso (sulfatación) o están flojas').
+observacion(desgaste_llantas, olores_fugas, 'Las llantas delanteras muestran desgaste liso de un solo borde').
+observacion(bornes_bateria_sulfatados, olores_fugas, 'Las terminales de la batería tienen polvo blanco/verdoso o están flojas').
 
 % sensacion(nombre_sintoma, categoria, detalle).
 sensacion(jaloneo_al_acelerar, al_acelerar, 'El vehículo da tirones o se jalonea al pisar el acelerador').
 sensacion(perdida_potencia_subida, al_acelerar, 'El auto pierde fuerza notablemente en subidas o al intentar rebasar').
-sensacion(motor_revoluciona_no_avanza, al_acelerar, 'El motor sube de revoluciones (hace más ruido) pero el auto no gana velocidad proporcionalmente').
+sensacion(motor_revoluciona_no_avanza, al_acelerar, 'El motor sube de revoluciones pero el auto no gana velocidad proporcional').
 sensacion(respuesta_lenta_acelerador, al_acelerar, 'Hay un retraso o ahogamiento desde que se pisa el acelerador hasta que el auto responde').
 sensacion(freno_pedal_esponjoso, al_frenar, 'El pedal de freno se siente blando, esponjoso o se hunde casi hasta el fondo').
 sensacion(freno_pedal_duro, al_frenar, 'El pedal de freno está excesivamente duro y requiere mucha fuerza para detener el auto').
 sensacion(vibracion_al_frenar, al_frenar, 'El volante o el pedal de freno vibran fuertemente al frenar a velocidad media o alta').
 sensacion(jaloneo_al_frenar, al_frenar, 'El vehículo se desvía o jala bruscamente hacia un lado cuando se frena').
-sensacion(chillido_al_frenar, al_frenar, 'Se escucha un rechinido o chillido metálico agudo cada vez que se pisa el freno').
+sensacion(chillido_al_frenar, al_frenar, 'Se escucha un chillido metálico cada vez que se pisa el freno').
 sensacion(volante_duro, en_direccion, 'El volante se siente muy pesado o duro al girar a baja velocidad').
-sensacion(desvio_en_recta, en_direccion, 'En calle plana el auto tiende a irse solo hacia la izquierda o derecha si sueltas un poco el volante').
+sensacion(desvio_en_recta, en_direccion, 'En calle plana el auto tiende cambiar de direccion si sueltas un poco el volante').
 sensacion(vibracion_alta_velocidad, en_direccion, 'El volante vibra de forma constante al superar los 80-90 km/h aunque no se frene').
-sensacion(golpeteo_baches, en_baches_curvas, 'Se siente y escucha un golpe seco (clonk) debajo del auto al pasar topes o baches').
+sensacion(golpeteo_baches, en_baches_curvas, 'Se siente y escucha un golpe seco debajo del auto al pasar topes o baches').
 sensacion(rebote_inestable, en_baches_curvas, 'El carro se siente inestable y sigue rebotando varias veces después de pasar un tope').
 sensacion(zumbido_constante, en_baches_curvas, 'Se percibe un zumbido o ronquido en las ruedas que crece conforme aumenta la velocidad').
 sensacion(velocidad_raspa, en_cambios, 'Las velocidades entran duras o raspan al hacer el cambio').
